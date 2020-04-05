@@ -18,6 +18,8 @@ run_tests();
 __DATA__
 
 === TEST 1: filter indeed used
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config
@@ -40,6 +42,8 @@ hello
 
 
 === TEST 2: filter not used
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config

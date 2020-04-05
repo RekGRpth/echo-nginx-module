@@ -18,6 +18,8 @@ run_tests();
 __DATA__
 
 === TEST 1: filters used
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config
@@ -40,6 +42,8 @@ echo body filter, uri "/echo?blah"
 
 
 === TEST 2: filters not used
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config
@@ -63,6 +67,8 @@ echo body filter, uri "/echo?blah"
 This test case won't run with nginx 1.9.3+ since duplicate http {} blocks
 have been prohibited since then.
 --- SKIP
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config
@@ -93,6 +99,8 @@ echo body filter, uri "/echo?blah"
 This test case won't run with nginx 1.9.3+ since duplicate http {} blocks
 have been prohibited since then.
 --- SKIP
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config

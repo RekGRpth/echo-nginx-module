@@ -17,6 +17,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub;
@@ -32,6 +34,8 @@ hello
 
 
 === TEST 2: sanity with proxy in the middle
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /proxy;
@@ -50,6 +54,8 @@ hello
 
 
 === TEST 3: trailing echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub;
@@ -67,6 +73,8 @@ after subrequest
 
 
 === TEST 4: leading echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo before subrequest;
@@ -84,6 +92,8 @@ hello
 
 
 === TEST 5: leading & trailing echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo before subrequest;
@@ -103,6 +113,8 @@ after subrequest
 
 
 === TEST 6: multiple subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo before sr 1;
@@ -128,6 +140,8 @@ after sr 2
 
 
 === TEST 7: timed multiple subrequests (blocking sleep)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_reset_timer;
@@ -154,6 +168,8 @@ took 0\.0(?:2[5-9]|3[0-6]) sec for total\.$
 
 
 === TEST 8: timed multiple subrequests (non-blocking sleep)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_reset_timer;
@@ -180,6 +196,8 @@ took 0\.0(?:2[5-9]|3[0-6]) sec for total\.$
 
 
 === TEST 9: location with args
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub 'foo=Foo&bar=Bar';
@@ -195,6 +213,8 @@ Foo Bar
 
 
 === TEST 10: chained subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo 'pre main';
@@ -225,6 +245,8 @@ post main
 === TEST 11: chained subrequests using named locations
 as of 0.8.20, ngx_http_subrequest still does not support
 named location. sigh. this case is a TODO.
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo 'pre main';
@@ -254,6 +276,8 @@ post main
 
 
 === TEST 12: explicit flush in main request
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo 'pre main';
@@ -276,6 +300,8 @@ post main
 
 
 === TEST 13: no varaiable inheritance
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo $echo_cacheable_request_uri;
@@ -299,6 +325,8 @@ post main
 
 
 === TEST 14: unsafe uri
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /unsafe {
         echo_location '/../foo';
@@ -315,6 +343,8 @@ echo_location sees unsafe uri: "/../foo"
 
 
 === TEST 15: querystring in url
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub?foo=Foo&bar=Bar;
@@ -330,6 +360,8 @@ Foo Bar
 
 
 === TEST 16: querystring in url *AND* an explicit querystring
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub?foo=Foo&bar=Bar blah=Blah;
@@ -346,6 +378,8 @@ Foo Bar
 
 === TEST 17: let subrequest to read the main request's request body
 --- SKIP
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub;
@@ -363,6 +397,8 @@ hello, body!
 
 
 === TEST 18: sleep after location
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub;
@@ -383,6 +419,8 @@ sub
 
 
 === TEST 19: deep nested echo_location/echo_location_async
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /bar;
@@ -416,6 +454,8 @@ GET /main
 
 
 === TEST 20: deep nested echo_location/echo_location_async (with sleep)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /bar;
@@ -449,6 +489,8 @@ GET /main
 
 
 === TEST 21: deep nested echo_location (with sleep)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /bar;
@@ -488,6 +530,8 @@ GET /main
 
 
 === TEST 22: leading subrequest & echo_before_body
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_before_body hello;
@@ -505,6 +549,8 @@ world
 
 
 === TEST 23: leading subrequest & xss
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         default_type 'application/json';
@@ -519,10 +565,13 @@ world
     GET /main?c=hi
 --- response_body chop
 hi(world);
+--- SKIP
 
 
 
 === TEST 24: multiple leading subrequest & xss
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         default_type 'application/json';
@@ -549,10 +598,13 @@ hi(world);
     GET /main?c=hi
 --- response_body chop
 hi(world people);
+--- SKIP
 
 
 
 === TEST 25: sanity (HEAD)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location /sub;

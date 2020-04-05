@@ -12,6 +12,8 @@ run_tests();
 __DATA__
 
 === TEST 1: big client body buffered into temp files
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         client_body_buffer_size 1k;
@@ -27,6 +29,8 @@ __DATA__
 
 
 === TEST 2: in memory request body (trailing echo)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         client_body_buffer_size 1k;
@@ -43,6 +47,8 @@ hello worlddone
 
 
 === TEST 3: big client body buffered into temp files (trailing echo)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         client_body_buffer_size 1k;

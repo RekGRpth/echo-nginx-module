@@ -12,6 +12,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_blocking_sleep 1;
@@ -23,6 +25,8 @@ __DATA__
 
 
 === TEST 2: fractional delay
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_blocking_sleep 0.01;
@@ -34,6 +38,8 @@ __DATA__
 
 
 === TEST 3: leading echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo before...;
@@ -47,6 +53,8 @@ before...
 
 
 === TEST 4: trailing echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_blocking_sleep 0.01;
@@ -60,6 +68,8 @@ after...
 
 
 === TEST 5: two echos around sleep
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo before...;
@@ -75,6 +85,8 @@ after...
 
 
 === TEST 6: interleaving sleep and echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo 1;
@@ -91,6 +103,8 @@ after...
 
 
 === TEST 7: interleaving sleep and echo with echo at the end...
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo 1;
@@ -111,6 +125,8 @@ after...
 === TEST 8: flush before sleep
 we didn't really test the actual effect of "echo_flush" here...
 merely checks if it croaks if appears.
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /flush {
         echo hi;
@@ -127,6 +143,8 @@ trees
 
 
 === TEST 9: flush does not increment opcode pointer itself
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /flush {
         echo hi;
@@ -142,6 +160,8 @@ trees
 
 
 === TEST 10: blocking sleep by variable
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location ~ ^/sleep/(.+) {
         echo before...;

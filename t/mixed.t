@@ -10,6 +10,8 @@ run_tests();
 __DATA__
 
 === TEST 1: echo before echo_client_request_headers
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo "headers:";
@@ -28,6 +30,8 @@ Connection: close\r
 
 
 === TEST 2: echo_client_request_headers before echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n $echo_client_request_headers;
@@ -46,6 +50,8 @@ Connection: close\r
 
 
 === TEST 3: echo & headers & echo
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo "headers are";
@@ -66,6 +72,8 @@ Connection: close\r
 
 
 === TEST 4: mixed with echo_duplicate
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /mixed {
         echo hello;

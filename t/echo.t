@@ -5,7 +5,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * (2 * blocks() + 6);
+plan tests => repeat_each() * (2 * blocks() + 6) - 2;
 
 #$Test::Nginx::LWP::LogLevel = 'debug';
 
@@ -14,6 +14,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo hello;
@@ -26,6 +28,8 @@ hello
 
 
 === TEST 2: multiple args
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo say hello world;
@@ -38,6 +42,8 @@ say hello world
 
 
 === TEST 3: multiple directive instances
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo say that;
@@ -54,6 +60,8 @@ world !
 
 
 === TEST 4: echo without arguments
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo;
@@ -67,6 +75,8 @@ world !
 
 
 === TEST 5: escaped newline
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo "hello\nworld";
@@ -80,6 +90,8 @@ world
 
 
 === TEST 6: escaped tabs and \r and " wihtin "..."
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo "i say \"hello\tworld\"\r";
@@ -91,6 +103,8 @@ world
 
 
 === TEST 7: escaped tabs and \r and " in single quotes
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo 'i say \"hello\tworld\"\r';
@@ -102,6 +116,8 @@ world
 
 
 === TEST 8: escaped tabs and \r and " w/o any quotes
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo i say \"hello\tworld\"\r;
@@ -114,6 +130,8 @@ world
 
 === TEST 9: escaping $
 As of Nginx 0.8.20, there's still no way to escape the '$' character.
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo \$;
@@ -127,6 +145,8 @@ $
 
 
 === TEST 10: XSS
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /blah {
         echo_duplicate 1 "$arg_callback(";
@@ -144,6 +164,8 @@ ding1111111({"dog":"/blah/9999999.json"})
 
 
 === TEST 11: XSS - filter version
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /blah {
         echo_before_body "$arg_callback(";
@@ -161,6 +183,8 @@ ding1111111(
 
 
 === TEST 12: if
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
 location /first {
  echo "before";
@@ -184,6 +208,8 @@ after
 
 
 === TEST 13: echo -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n hello;
@@ -197,6 +223,8 @@ helloworld
 
 
 === TEST 14: echo a -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo a -n hello;
@@ -211,6 +239,8 @@ b -n world
 
 
 === TEST 15: -n in a var
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         set $opt -n;
@@ -226,6 +256,8 @@ b -n world
 
 
 === TEST 16: -n only
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n;
@@ -238,6 +270,8 @@ b -n world
 
 
 === TEST 17: -n with an empty string
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n "";
@@ -251,6 +285,8 @@ b -n world
 
 
 === TEST 18: -- -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -- -n hello;
@@ -265,6 +301,8 @@ b -n world
 
 
 === TEST 19: -n -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n -n hello;
@@ -278,6 +316,8 @@ helloworld
 
 
 === TEST 20: -n -- -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n -- -n hello;
@@ -291,6 +331,8 @@ helloworld
 
 
 === TEST 21: proxy
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         proxy_pass http://127.0.0.1:$server_port/echo;
@@ -310,6 +352,8 @@ world
 
 
 === TEST 22: if is evil
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /test {
         set $a 3;
@@ -329,6 +373,8 @@ world
 
 
 === TEST 23: HEAD
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo hello;
@@ -341,6 +387,8 @@ world
 
 
 === TEST 24: POST
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo hello;
@@ -356,6 +404,8 @@ foo bar baz"]
 
 
 === TEST 25: POST
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_sleep 0.001;
@@ -372,6 +422,8 @@ foo bar baz"]
 
 
 === TEST 26: empty arg after -n (github issue #33)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location = /t {
         set $empty "";
@@ -385,6 +437,9 @@ foo bar baz"]
 
 
 === TEST 27: image filter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+    load_module /etc/nginx/modules/ngx_http_image_filter_module.so;
 --- config
     location = /gif {
         empty_gif;
@@ -413,4 +468,5 @@ F(ngx_http_image_header_filter) {
 --- stap_out
 image header filter
 --- response_body_like: .
+--- SKIP
 

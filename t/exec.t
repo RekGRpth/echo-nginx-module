@@ -14,6 +14,8 @@ run_tests();
 __DATA__
 
 === TEST 1: exec normal location
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_exec /bar;
@@ -32,6 +34,8 @@ bar
 
 
 === TEST 2: location with args (inlined in uri)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_exec /bar?a=32;
@@ -48,6 +52,8 @@ a: [32]
 
 
 === TEST 3: location with args (in separate arg)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_exec /bar a=56;
@@ -64,6 +70,8 @@ a: [56]
 
 
 === TEST 4: exec named location
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_exec @bar;
@@ -80,6 +88,8 @@ bar
 
 
 === TEST 5: query string ignored for named locations
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_exec @bar?a=32;
@@ -98,6 +108,8 @@ querystring a=32 ignored when exec'ing named location @bar
 
 
 === TEST 6: query string ignored for named locations
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
   location /foo {
       echo_exec @bar;
@@ -113,6 +125,8 @@ uri: [/foo]
 
 
 === TEST 7: exec(named location) in subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /entry {
         echo_location /foo;
@@ -142,6 +156,8 @@ hello
 
 
 === TEST 8: exec(normal loctions) in subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /entry {
         echo_location /foo;
@@ -171,6 +187,8 @@ hello
 
 
 === TEST 9: exec should clear ctx
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location @bar {
         echo hello;
@@ -192,6 +210,8 @@ heh
 
 
 === TEST 10: reset ctx
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location @proxy {
         rewrite_by_lua return;
@@ -205,10 +225,13 @@ heh
     GET /main
 --- response_body
 hello
+--- SKIP
 
 
 
 === TEST 11: yield before exec
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location @bar {
         echo hello;

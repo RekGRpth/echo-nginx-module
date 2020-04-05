@@ -14,6 +14,8 @@ run_tests();
 __DATA__
 
 === TEST 1: 200
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_status 200;
@@ -28,6 +30,8 @@ hello
 
 
 === TEST 2: if location (200)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         set $true 1;
@@ -45,6 +49,8 @@ hello
 
 
 === TEST 3: 404
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_status 404;
@@ -59,6 +65,8 @@ hello
 
 
 === TEST 4: if location (404)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         set $true 1;
@@ -76,6 +84,8 @@ hello
 
 
 === TEST 5: 500
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_status 500;
@@ -90,6 +100,8 @@ hello
 
 
 === TEST 6: if location (500)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         set $true 1;
@@ -107,6 +119,8 @@ hello
 
 
 === TEST 7: if location (500) no inherit
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         set $true 1;
@@ -125,6 +139,8 @@ hello
 
 
 === TEST 8: subrequest
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_location /sub;

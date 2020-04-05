@@ -10,6 +10,8 @@ run_tests();
 __DATA__
 
 === TEST 1: timer without explicit reset
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /timer {
         echo_sleep 0.03;
@@ -23,6 +25,8 @@ __DATA__
 
 
 === TEST 2: timer without explicit reset and sleep
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /timer {
         echo "elapsed $echo_timer_elapsed sec.";
@@ -35,6 +39,8 @@ __DATA__
 
 
 === TEST 3: timing accumulated sleeps
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /timer {
         echo_sleep 0.03;
@@ -49,6 +55,8 @@ __DATA__
 
 
 === TEST 4: timer with explicit reset but without sleep
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /timer {
         echo_reset_timer;
@@ -62,6 +70,8 @@ __DATA__
 
 
 === TEST 5: reset timer between sleeps
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /timer {
         echo_sleep 0.02;
@@ -79,6 +89,8 @@ elapsed 0\.0(2[6-9]|3[0-6]) sec\.$
 
 
 === TEST 6: reset timer between blocking sleeps
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /timer {
         echo_blocking_sleep 0.02;
@@ -96,6 +108,8 @@ elapsed 0\.0(2[6-9]|3[0-6]) sec\.$
 
 
 === TEST 7: timer without explicit reset
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location = /timer {
         return 200 "$echo_timer_elapsed";

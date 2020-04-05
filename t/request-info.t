@@ -12,6 +12,8 @@ run_tests();
 __DATA__
 
 === TEST 1: standalone directive
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n $echo_client_request_headers;
@@ -30,6 +32,8 @@ Connection: close\r
 
 
 === TEST 2: multiple instances
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo -n $echo_client_request_headers;
@@ -53,6 +57,8 @@ Connection: close\r
 
 
 === TEST 3: does not explicitly request_body
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo [$echo_request_body];
@@ -69,6 +75,8 @@ heh
 
 
 === TEST 4: let proxy read request_body
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body [$echo_request_body];
@@ -88,6 +96,8 @@ heh]
 
 
 === TEST 5: use echo_read_request_body to read it!
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_read_request_body;
@@ -106,6 +116,8 @@ heh]
 
 
 === TEST 6: how about sleep after that?
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_read_request_body;
@@ -125,6 +137,8 @@ heh]
 
 
 === TEST 7: echo back the whole client request
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
   # echo back the client request
   location /echoback {
@@ -151,6 +165,8 @@ haha
 
 
 === TEST 8: echo_request_body
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /body {
       client_body_buffer_size    5;
@@ -170,6 +186,8 @@ haha
 
 
 === TEST 9: $echo_response_status in content handler
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /status {
         echo "status: $echo_response_status";
@@ -184,6 +202,8 @@ status:
 
 
 === TEST 10: echo_request_body (empty body)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /body {
       echo_read_request_body;
@@ -202,6 +222,8 @@ status:
 
 
 === TEST 11: small header
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -222,6 +244,8 @@ Connection: close\r
 
 
 === TEST 12: large header
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 30 561;
@@ -246,6 +270,8 @@ Connection: close\r
 
 
 === TEST 13: small header, with leading CRLF
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -268,6 +294,8 @@ Connection: close\r
 
 
 === TEST 14: large header, with leading CRLF
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 30 561;
@@ -295,6 +323,8 @@ Connection: close\r
 
 
 === TEST 15: small header, pipelined
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -323,6 +353,8 @@ Foo: bar\r
 
 
 === TEST 16: large header, pipelined
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 30 561;
@@ -353,6 +385,8 @@ $headers}]
 
 
 === TEST 17: small header, multi-line header
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -379,6 +413,8 @@ Foo: bar baz\r
 
 
 === TEST 18: large header, multi-line header
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 50 567;
@@ -407,6 +443,8 @@ Connection: close\r
 
 
 === TEST 19: small header (POST body)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo_read_request_body;
@@ -428,6 +466,8 @@ Content-Length: 5\r
 
 
 === TEST 20: small header (POST body) - in subrequests (location)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -452,6 +492,8 @@ Content-Length: 5\r
 
 
 === TEST 21: large header (POST body)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 30 561;
@@ -480,6 +522,8 @@ Connection: close\r
 
 
 === TEST 22: large header (POST body) - in subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 30 561;
@@ -511,6 +555,8 @@ Connection: close\r
 
 
 === TEST 23: raw headers - the default header buffer can hold the request line, but not the header entries
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo_read_request_body;
@@ -537,6 +583,8 @@ Cookie: " . ("C" x 1200) . "\r\n\r\n"
 
 
 === TEST 24: small header (POST body) - in subrequests (location_async)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -561,6 +609,8 @@ Content-Length: 5\r
 
 
 === TEST 25: small header (POST body) - in subrequests (subrequest)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -585,6 +635,8 @@ Content-Length: 5\r
 
 
 === TEST 26: small header (POST body) - in subrequests (subrequest_async)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /t {
         echo -n $echo_client_request_headers;
@@ -609,6 +661,8 @@ Content-Length: 5\r
 
 
 === TEST 27: ngx_proxy/ngx_fastcgi/etc change r->header_end to point to their own buffers
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location = /t {
         proxy_buffering off;
@@ -638,6 +692,8 @@ Connection: close\r
 
 
 === TEST 28: ngx_proxy/ngx_fastcgi/etc change r->header_end to point to their own buffers (exclusive LF in the request data)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location = /t {
         proxy_buffering off;
@@ -674,6 +730,8 @@ Content-Length: 5
 
 
 === TEST 29: ngx_proxy/ngx_fastcgi/etc change r->header_end to point to their own buffers (mixed LF and CRLF in the request data)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location = /t {
         proxy_buffering off;
@@ -710,6 +768,8 @@ Content-Length: 5\r
 
 
 === TEST 30: ngx_proxy/ngx_fastcgi/etc change r->header_end to point to their own buffers (another way of mixing LF and CRLF in the request data)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location = /t {
         proxy_buffering off;
@@ -746,6 +806,8 @@ Content-Length: 5
 
 
 === TEST 31: two pipelined requests with large headers
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 3 5610;
@@ -778,6 +840,8 @@ Connection: close\r
 
 
 === TEST 32: a request with large header and a smaller pipelined request following
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 2 1921;
@@ -810,6 +874,8 @@ Foo: bar\r
 
 
 === TEST 33: a request with large header and a smaller pipelined request following
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 2 1921;

@@ -12,6 +12,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity (hit)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location ^~ /if {
         set $res miss;
@@ -29,6 +31,8 @@ hit
 
 
 === TEST 2: sanity (miss)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location ^~ /if {
         set $res miss;
@@ -46,6 +50,8 @@ miss
 
 
 === TEST 3: proxy in if (hit)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location ^~ /if {
         set $res miss;
@@ -66,6 +72,8 @@ res = hit
 
 
 === TEST 4: proxy in if (miss)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location ^~ /if {
         set $res miss;
@@ -86,6 +94,8 @@ res = miss
 
 
 === TEST 5: if too long url (hit)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /foo {
         if ($request_uri ~ '.{20,}') {
@@ -101,6 +111,8 @@ too long
 
 
 === TEST 6: if too long url (miss)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /foo {
         if ($request_uri ~ '.{20,}') {
@@ -116,6 +128,8 @@ ok
 
 
 === TEST 7: echo should be inherited by if blocks
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /foo {
         if ($uri ~ 'foo') {
@@ -130,6 +144,8 @@ ok
 
 
 === TEST 8: echo_after_body and echo_before_body should be inherited by if blocks
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /foo {
         if ($uri ~ 'foo') {

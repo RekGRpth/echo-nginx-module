@@ -12,6 +12,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body hello;
@@ -26,6 +28,8 @@ world
 
 
 === TEST 2: echo before proxy
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body hello;
@@ -43,6 +47,8 @@ world
 
 
 === TEST 3: with variables
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body $request_method;
@@ -57,6 +63,8 @@ world
 
 
 === TEST 4: w/o args
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body;
@@ -70,6 +78,8 @@ world
 
 
 === TEST 5: order is not important
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /reversed {
         echo world;
@@ -84,6 +94,8 @@ world
 
 
 === TEST 6: multiple echo_before_body instances
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body hello;
@@ -100,6 +112,8 @@ world
 
 
 === TEST 7: multiple echo_before_body instances with multiple echo cmds
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body hello;
@@ -118,6 +132,8 @@ say
 
 
 === TEST 8: with $echo_response_status
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /status {
         echo_before_body "status: $echo_response_status";
@@ -133,6 +149,8 @@ status: 404
 
 
 === TEST 9: $echo_response_status in echo_before_body in subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location '/status?val=403';
@@ -159,6 +177,8 @@ status: 404
 
 
 === TEST 10: echo -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body -n hello;
@@ -173,6 +193,8 @@ helloworld==
 
 
 === TEST 11: echo a -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body a -n hello;
@@ -189,6 +211,8 @@ b -n world
 
 
 === TEST 12: -n in a var
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         set $opt -n;
@@ -206,6 +230,8 @@ b -n world
 
 
 === TEST 13: -n only
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body -n;
@@ -220,6 +246,8 @@ b -n world
 
 
 === TEST 14: -n with an empty string
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body -n "";
@@ -235,6 +263,8 @@ b -n world
 
 
 === TEST 15: -- -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body -- -n hello;
@@ -251,6 +281,8 @@ b -n world
 
 
 === TEST 16: -n -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body -n -n hello;
@@ -265,6 +297,8 @@ helloworld==
 
 
 === TEST 17: -n -- -n
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body -n -- -n hello;

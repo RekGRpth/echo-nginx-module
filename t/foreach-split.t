@@ -14,6 +14,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_foreach_split '&' $query_string;
@@ -38,6 +40,8 @@ table { color: 'red'; }
 
 
 === TEST 2: split in a url argument (echo_location_async)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main_async {
         echo_foreach_split ',' $arg_cssfiles;
@@ -63,6 +67,8 @@ baz
 
 
 === TEST 3: split in a url argument (echo_location)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main_sync {
         echo_foreach_split ',' $arg_cssfiles;
@@ -89,6 +95,8 @@ baz
 
 
 === TEST 4: empty loop
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo "start";
@@ -105,6 +113,8 @@ end
 
 
 === TEST 5: trailing delimiter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main_t {
         echo_foreach_split ',' $arg_cssfiles;
@@ -122,6 +132,8 @@ foo
 
 
 === TEST 6: multi-char delimiter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main_sleep {
         echo_foreach_split '-a-' $arg_list;
@@ -136,6 +148,8 @@ foo
 
 
 === TEST 7: multi-char delimiter (the right way)
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main_sleep {
         echo_foreach_split -- '-a-' $arg_list;
@@ -152,6 +166,8 @@ baz
 
 
 === TEST 8: loop with sleep
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main_sleep {
         echo_foreach_split '-' $arg_list;
@@ -171,6 +187,8 @@ baz
 
 
 === TEST 9: empty
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
   location /merge {
       default_type 'text/javascript';
@@ -187,6 +205,8 @@ baz
 
 
 === TEST 10: single &
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
   location /merge {
       default_type 'text/javascript';
@@ -203,6 +223,8 @@ baz
 
 
 === TEST 11: pure &'s
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
   location /merge {
       default_type 'text/javascript';
@@ -220,6 +242,8 @@ baz
 
 === TEST 12: pure & and spaces
 TODO: needs to uri_decode $echo_it...
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
   location /merge {
       default_type 'text/javascript';
@@ -237,6 +261,8 @@ TODO: needs to uri_decode $echo_it...
 
 
 === TEST 13: multiple foreach_split
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /multi {
         echo_foreach_split '&' $query_string;
@@ -262,6 +288,8 @@ TODO: needs to uri_decode $echo_it...
 
 
 === TEST 14: github issue #2: setting a variable from $echo_it results to crashing
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
 location = /getFile {
     set $filelist "a,b,c";

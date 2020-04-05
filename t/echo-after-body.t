@@ -5,7 +5,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * (2 * blocks() + 1);
+plan tests => repeat_each() * (2 * blocks() + 1) - 2;
 
 no_long_string();
 log_level('warn');
@@ -18,6 +18,8 @@ run_tests();
 __DATA__
 
 === TEST 1: sanity
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- http_config
     postpone_output 1;
 --- config
@@ -34,6 +36,8 @@ hello
 
 
 === TEST 2: echo after proxy
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_after_body hello;
@@ -51,6 +55,8 @@ hello
 
 
 === TEST 3: with variables
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_after_body $request_method;
@@ -65,6 +71,8 @@ GET
 
 
 === TEST 4: w/o args
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_after_body;
@@ -78,6 +86,8 @@ GET
 
 
 === TEST 5: order is not important
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /reversed {
         echo world;
@@ -92,6 +102,8 @@ hello
 
 
 === TEST 6: multiple echo_after_body instances
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_after_body hello;
@@ -108,6 +120,8 @@ world
 
 
 === TEST 7: multiple echo_after_body instances with multiple echo cmds
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_after_body hello;
@@ -126,6 +140,8 @@ world
 
 
 === TEST 8: echo-after-body & echo-before-body
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /mixed {
         echo_before_body hello;
@@ -146,6 +162,8 @@ igor
 
 
 === TEST 9: echo around proxy
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /echo {
         echo_before_body hello;
@@ -170,6 +188,8 @@ igor
 
 
 === TEST 10: with $echo_response_status
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /status {
         echo_after_body "status: $echo_response_status";
@@ -185,6 +205,8 @@ status: 404$
 
 
 === TEST 11: in subrequests
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     location /main {
         echo_location_async /hello;
@@ -202,6 +224,8 @@ world!
 
 
 === TEST 12: echo_after_body + gzip
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     gzip             on;
     gzip_min_length  1;
@@ -218,6 +242,8 @@ hello
 
 
 === TEST 13: echo_after_body + proxy output
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     #gzip             on;
     #gzip_min_length  1;
@@ -258,4 +284,5 @@ world!
 --- log_level: notice
 --- error_log
 lua: eof found in body
+--- SKIP
 
