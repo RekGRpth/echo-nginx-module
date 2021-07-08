@@ -67,9 +67,6 @@ ngx_http_echo_header_filter(ngx_http_request_t *r)
     ngx_http_echo_loc_conf_t    *conf;
     ngx_http_echo_ctx_t         *ctx;
 
-    ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
-                   "echo header filter, uri \"%V?%V\"", &r->uri, &r->args);
-
     ctx = ngx_http_get_module_ctx(r, ngx_http_echo_module);
 
     /* XXX we should add option to insert contents for responses
@@ -90,6 +87,9 @@ ngx_http_echo_header_filter(ngx_http_request_t *r)
         }
         return ngx_http_echo_next_header_filter(r);
     }
+
+    ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+                   "echo header filter, uri \"%V?%V\"", &r->uri, &r->args);
 
     if (ctx == NULL) {
         ctx = ngx_http_echo_create_ctx(r);
@@ -118,9 +118,6 @@ ngx_http_echo_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
     ngx_chain_t                 *cl;
     ngx_buf_t                   *b;
 
-    ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
-                   "echo body filter, uri \"%V?%V\"", &r->uri, &r->args);
-
     if (in == NULL || r->header_only) {
         return ngx_http_echo_next_body_filter(r, in);
     }
@@ -130,6 +127,9 @@ ngx_http_echo_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
     if (ctx == NULL || ctx->skip_filter) {
         return ngx_http_echo_next_body_filter(r, in);
     }
+
+    ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+                   "echo body filter, uri \"%V?%V\"", &r->uri, &r->args);
 
     conf = ngx_http_get_module_loc_conf(r, ngx_http_echo_module);
 
