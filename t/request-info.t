@@ -423,7 +423,7 @@ blah\r
     }
 
 --- raw_request eval
-my $headers = (CORE::join "\r\n", map { "Header$_: value-$_\r\n hello $_ world blah blah" } 1..512) . "\r\n\r\n";
+my $headers = (CORE::join "\r\n", map { "Header$_: value-$_ hello $_ world blah blah" } 1..512) . "\r\n\r\n";
 
 qq{GET /t HTTP/1.1\r
 Host: localhost\r
@@ -435,7 +435,7 @@ qq{GET /t HTTP/1.1\r
 Host: localhost\r
 Connection: close\r
 }
-.(CORE::join "\r\n", map { "Header$_: value-$_\r\n hello $_ world blah blah" } 1..512) . "\r\n\r\n"
+.(CORE::join "\r\n", map { "Header$_: value-$_ hello $_ world blah blah" } 1..512) . "\r\n\r\n"
 
 --- no_error_log
 [error]
