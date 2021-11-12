@@ -914,6 +914,8 @@ Foo: bar\r
 
 
 === TEST 34: invalid header line started with whitespace since nginx 1.21.1
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
 --- config
     client_header_buffer_size 10;
     large_client_header_buffers 50 567;
