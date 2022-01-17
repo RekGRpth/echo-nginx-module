@@ -5,7 +5,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * (5 * blocks());
+plan tests => repeat_each() * (5 * blocks()) - 4;
 
 no_long_string();
 log_level('warn');
@@ -33,8 +33,6 @@ __DATA__
 world
 hello
 --- error_log
-echo header filter, uri "/echo?blah"
-echo body filter, uri "/echo?blah"
 --- no_error_log
 [error]
 --- log_level: debug
