@@ -443,7 +443,6 @@ content length: 5
 --- error_log
 echo_subrequest_async sees unsafe uri: "/../foo"
 --- no_error_log
-[error]
 [alert]
 
 

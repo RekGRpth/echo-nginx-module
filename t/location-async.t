@@ -343,7 +343,6 @@ F(ngx_http_send_header) {
 --- error_log
 echo_location_async sees unsafe uri: "/../foo"
 --- no_error_log
-[error]
 [alert]
 
 
