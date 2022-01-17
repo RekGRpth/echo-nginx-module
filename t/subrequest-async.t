@@ -5,7 +5,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * (blocks() * 2 + 1);
+plan tests => repeat_each() * (blocks() * 2 + 1) - 2;
 
 #$Test::Nginx::LWP::LogLevel = 'debug';
 

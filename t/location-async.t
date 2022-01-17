@@ -5,7 +5,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * (2 * blocks() + 1);
+plan tests => repeat_each() * (2 * blocks() + 1) - 2;
 
 run_tests();
 

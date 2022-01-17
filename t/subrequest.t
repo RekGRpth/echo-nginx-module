@@ -6,7 +6,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * (2 * blocks() + 1);
+plan tests => repeat_each() * (2 * blocks() + 1) - 2;
 
 $ENV{TEST_NGINX_HTML_DIR} = html_dir;
 $ENV{TEST_NGINX_CLIENT_PORT} ||= server_port();
