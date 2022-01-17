@@ -45,7 +45,7 @@ ngx_http_echo_exec_echo_location_async(ngx_http_request_t *r,
     args.len = 0;
 
     if (ngx_http_parse_unsafe_uri(r, &location, &args, &flags) != NGX_OK) {
-        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
                        "echo_location_async sees unsafe uri: \"%V\"",
                        &location);
         return NGX_ERROR;
@@ -108,7 +108,7 @@ ngx_http_echo_exec_echo_location(ngx_http_request_t *r,
     args.len = 0;
 
     if (ngx_http_parse_unsafe_uri(r, &location, &args, &flags) != NGX_OK) {
-        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
                        "echo_location sees unsafe uri: \"%V\"",
                        &location);
         return NGX_ERROR;

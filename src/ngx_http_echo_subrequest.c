@@ -86,7 +86,7 @@ ngx_http_echo_exec_echo_subrequest_async(ngx_http_request_t *r,
     if (ngx_http_parse_unsafe_uri(r, parsed_sr->location, &args, &flags)
         != NGX_OK)
     {
-        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
                        "echo_subrequest_async sees unsafe uri: \"%V\"",
                        parsed_sr->location);
         return NGX_ERROR;
@@ -143,7 +143,7 @@ ngx_http_echo_exec_echo_subrequest(ngx_http_request_t *r,
     if (ngx_http_parse_unsafe_uri(r, parsed_sr->location, &args, &flags)
         != NGX_OK)
     {
-        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
                        "echo_subrequest sees unsafe uri: \"%V\"",
                        parsed_sr->location);
         return NGX_ERROR;
@@ -662,7 +662,7 @@ ngx_http_echo_exec_exec(ngx_http_request_t *r,
     args.len = 0;
 
     if (ngx_http_parse_unsafe_uri(r, uri, &args, &flags) != NGX_OK) {
-        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
                        "echo_exec sees unsafe uri: \"%V\"",
                        uri);
         return NGX_ERROR;
