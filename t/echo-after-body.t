@@ -285,4 +285,3 @@ world!
 --- error_log
 lua: eof found in body
 --- SKIP
-

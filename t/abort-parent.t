@@ -62,4 +62,3 @@ __DATA__
 --- response_body
 hello
 bar
-
