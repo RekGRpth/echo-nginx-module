@@ -224,3 +224,20 @@ after
 before...
 after...
 
+
+
+=== TEST 14: zero delay followed by another sleep
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /echo {
+        echo_sleep 0;
+        echo before;
+        echo_sleep 0.001;
+        echo after;
+    }
+--- request
+    GET /echo
+--- response_body
+before
+after

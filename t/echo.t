@@ -469,4 +469,3 @@ F(ngx_http_image_header_filter) {
 image header filter
 --- response_body_like: .
 --- SKIP
-

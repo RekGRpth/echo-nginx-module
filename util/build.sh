@@ -10,8 +10,9 @@ home=~
             #--with-cc=gcc46 \
 
 ngx-build $force $version \
-            --with-ld-opt="-L$PCRE_LIB -Wl,-rpath,$PCRE_LIB:$LIBDRIZZLE_LIB:/usr/local/lib" \
-            --with-cc-opt="-DDEBUG_MALLOC" \
+            --with-ld-opt="-L$OPENSSL_LIB -L$PCRE_LIB -Wl,-rpath,$OPENSSL_LIB:$PCRE_LIB:$LIBDRIZZLE_LIB:/usr/local/lib" \
+            --with-cc-opt="-DDEBUG_MALLOC -I $OPENSSL_INC -I $PCRE_INC" \
+            --with-http_ssl_module \
             --with-http_stub_status_module \
             --with-http_image_filter_module \
             --without-mail_pop3_module \
@@ -36,9 +37,4 @@ ngx-build $force $version \
           --with-poll_module \
           --without-http_ssi_module \
           --with-debug || exit 1
-          #--add-module=$root/../lz-session-nginx-module \
-          #--add-module=$home/work/ndk \
-          #--add-module=$home/work/ndk/examples/http/set_var \
-          #--add-module=$root/../eval-nginx-module \
-          #--add-module=/home/agentz/work/nginx_eval_module-1.0.1 \
 

@@ -5,7 +5,7 @@ use Test::Nginx::Socket;
 
 repeat_each(2);
 
-plan tests => repeat_each() * 2 * blocks();
+plan tests => repeat_each() * (2 * blocks() + 4);
 
 #$Test::Nginx::LWP::LogLevel = 'debug';
 
@@ -309,3 +309,109 @@ sha256:
 sha256: 
 sha256: 
 
+
+
+=== TEST 15: reject an empty request-derived delimiter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /loop {
+        echo_foreach_split $arg_d $arg_s;
+            echo $echo_it;
+        echo_end;
+    }
+--- request
+    GET /loop?d=&s=abc
+--- error_code: 500
+--- response_body_like: 500 Internal Server Error
+--- error_log
+echo_foreach_split delimiter must not be empty
+
+
+
+=== TEST 16: reject a missing delimiter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /loop {
+        echo_foreach_split $arg_d $arg_s;
+            echo $echo_it;
+        echo_end;
+    }
+--- request
+    GET /loop?s=abc
+--- error_code: 500
+--- response_body_like: 500 Internal Server Error
+--- error_log
+echo_foreach_split delimiter must not be empty
+
+
+
+=== TEST 17: reject an empty delimiter with empty input
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /loop {
+        echo_foreach_split $arg_d $arg_s;
+            echo $echo_it;
+        echo_end;
+    }
+--- request
+    GET /loop?d=&s=
+--- error_code: 500
+--- response_body_like: 500 Internal Server Error
+--- error_log
+echo_foreach_split delimiter must not be empty
+
+
+
+=== TEST 18: reject a literal empty delimiter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /loop {
+        echo_foreach_split "" abc;
+            echo $echo_it;
+        echo_end;
+    }
+--- request
+    GET /loop
+--- error_code: 500
+--- response_body_like: 500 Internal Server Error
+--- error_log
+echo_foreach_split delimiter must not be empty
+
+
+
+=== TEST 19: non-empty delimiter with empty input
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /loop {
+        echo_foreach_split $arg_d $arg_s;
+            echo $echo_it;
+        echo_end;
+        echo done;
+    }
+--- request
+    GET /loop?d=,&s=
+--- response_body
+done
+
+
+
+=== TEST 20: request-derived multi-character delimiter
+--- main_config
+    load_module /etc/nginx/modules/ngx_http_echo_module.so;
+--- config
+    location /loop {
+        echo_foreach_split $arg_d $arg_s;
+            echo $echo_it;
+        echo_end;
+    }
+--- request
+    GET /loop?d=::&s=a::b::c
+--- response_body
+a
+b
+c

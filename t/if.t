@@ -163,4 +163,3 @@ ok
     GET /foo
 --- response_body
 hello, world
-
